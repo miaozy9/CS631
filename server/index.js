@@ -1,4 +1,4 @@
-const express = require('express');
+ const express = require('express');
 const mysql = require('mysql2');
 var cors = require('cors')
 var axios = require('axios');
@@ -17,15 +17,14 @@ const db = mysql.createConnection({
     user: "root",
     host: "localhost",
     password: "20120461mm",
-  
-	database: "LoginApp"
+	database: "citylibrary"
 })
 
 const pool = mysql.createPool({
 	user: "root",
     host: "localhost",
     password: "20120461mm",
-	database: "LoginApp",
+	database: "citylibrary",
 	waitForConnections: true,
 	connectionLimit: 10,
 	queueLimit: 0
@@ -34,11 +33,6 @@ const pool = mysql.createPool({
 db.connect(function (err) {
     if (err) throw err;
     console.log("connected!");
-		var sql = "CREATE TABLE IF NOT EXISTS user (userid int auto_increment primary key, username varchar(50),password varchar(50), general boolean, business boolean, entertainment boolean, health boolean, science boolean, sports boolean, technology boolean)";
-			db.query(sql, function (err, result) {
-					if (err) throw err;
-					console.log("user created");
-			});
 });
 
 
