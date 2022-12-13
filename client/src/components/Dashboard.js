@@ -1,10 +1,6 @@
 import React, {useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../Context/GlobalState';
 import { Link } from 'react-router-dom';
-
-
-const Dashboard = () => {
-import Pagination from './Pagination';
 import axios from "axios";
 import SearchBar from './SearchBar';
 import { useNavigate } from 'react-router-dom';
