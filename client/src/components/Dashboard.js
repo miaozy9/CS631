@@ -133,12 +133,17 @@ const Dashboard = () => {
         <Link to="/searchDoc"> Search Document</Link>
         <br></br>
         <Link to="/Checkout"> Checkout</Link>
-        <h2>Return Document</h2>
-        <h2>Reserve Document</h2>
+        <br></br>
+        <Link to="/Return"> Return</Link>
+        <br></br>
+        <Link to="/Reserve"> Reserve Document</Link>
         <h2>Compute Fine</h2>
-        <h2>Print Document List</h2>
-        <h2>Print Document by a Publisher</h2>
-        <h2>Quit</h2>
+        <br></br>
+        <Link to="/DocList">Print Borrowed Document List</Link>
+        <br></br>
+        <Link to="/searchDoc">Print Document by a Publisher</Link>
+        <br></br>
+        <Link to="/"> Quit</Link>
       </div>
     )
 

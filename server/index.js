@@ -189,6 +189,62 @@ app.post("/checkout", (req, res) => {
 	}
 )
 
+app.post("/reserve", (req, res) => {
+	let ResNumber = req.body.ResNumber;
+	let Copy_DocId = req.body.Copy_DocId;
+	let CopyNo = req.body.CopyNo;
+	db.query('SELECT * FROM reserves WHERE ResNumber = ? AND Copy_DocId = ? AND CopyNo = ?', [ResNumber, Copy_DocId, CopyNo], function (error, results, fields) {
+			if (error) throw error;
+			if (results.length > 0) {
+				res.writeHead(400);
+				res.write('Already reserved');
+			}
+			else {
+
+				db.query('INSERT INTO reserves(ResNumber,Copy_DocId,CopyNo) VALUES (?, ?, ?)', [ResNumber, Copy_DocId, CopyNo])
+				res.writeHead(200);
+				res.write('Reserve success');
+			}
+			res.end();
+		});
+	}
+)
+
+app.post("/return", (req, res) => {
+	let BorNumber = req.body.BorNumber;
+	let DocId = req.body.DocId;
+	let CopyNo = req.body.CopyNo;
+	let BId = req.body.BId;
+	let ReaderId = req.body.ReaderId;
+	console.log(BorNumber)
+	db.query('SELECT * FROM borrows WHERE BorNumber = ? AND DocId = ? AND CopyNo = ? AND BId = ? AND ReaderId = ? ', [BorNumber, DocId, CopyNo, BId, ReaderId], function (error, results, fields) {
+			if (error) throw error;
+			if (results.length > 0) {
+				db.query('DELETE FROM borrows WHERE BorNumber = ? AND DocId = ? AND CopyNo = ? AND BId = ? AND ReaderId = ? ', [BorNumber, DocId, CopyNo, BId, ReaderId])
+				res.writeHead(200);
+				res.write('Successfully deleted');
+			}
+			else {
+				console.log("not found")
+				res.writeHead(400);
+				res.write('Not found');
+			}
+			res.end();
+		});
+	}
+)
+
+// Search for an item
+app.get("/doclist/:readerID", async(req, res) => {
+	let readerID = req.params.readerID;
+	pool.query(
+		'SELECT DocId, Title, PubName FROM (borrows NATURAL JOIN DOCUMENT NATURAL JOIN PUBLISHER) WHERE ReaderId = ?', [readerID],
+		function(err, results, fields) {
+		  console.log(results); // results contains rows returned by server
+		  res.status(200).send(results);
+		}
+	  );
+})
 
 app.post("/setting", (req, res) => {
 	let data = req.body.check;

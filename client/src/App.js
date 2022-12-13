@@ -11,8 +11,10 @@ import Adminlogin from './components/Adminlogin'
 import Register from './components/Register'; 
 import Dashboard from './components/Dashboard';
 import Checkout from './components/Checkout'
+import Return from './components/Return'
+import Reserve from './components/Reserve'
 import Setting from './components/Setting';
-import Business from './components/category/Business';
+import DocList from './components/DocList'
 import Tabs from './components/Tabs';
 import SearchResult from './components/SearchResult';
 import SearchDoc from './components/SearchDocument';
@@ -34,10 +36,12 @@ const App = () => {
             <Route path="register" element={<Register />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="/settings" element={<Setting /> } />
-            <Route path="/business" element={<Business /> } />
             <Route path="/searchresult" element={<SearchResult /> } />
             <Route path="/searchDoc" element={<SearchDoc /> } />
             <Route path="/Checkout" element={<Checkout /> } />
+            <Route path="/Return" element={<Return /> } />
+            <Route path="/Reserve" element={<Reserve /> } />
+            <Route path="/DocList" element={<DocList /> } />
             <Route path="/adminSearchResult" element={<AdminSearchResult /> } />
           </Routes>
         </section>
