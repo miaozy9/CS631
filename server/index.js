@@ -167,16 +167,27 @@ app.post("/adminSignin", (req, res) => {
 })
 
 app.post("/checkout", (req, res) => {
+	let BorNumber = req.body.BorNumber;
 	let DocId = req.body.DocId;
 	let CopyNo = req.body.CopyNo;
 	let BId = req.body.BId;
 	let ReaderId = req.body.ReaderId;
-
-	db.query('INSERT INTO BORROWS (DocId,CopyNo,BId,ReaderId) VALUES(?, ?, ?, ?)', [DocId, CopyNo, BId, ReaderId], function (error, result, fields) {
-		if (error) throw error;
-		res.end();
-	});
-})
+	console.log(DocId)
+	db.query('SELECT * FROM borrows WHERE BorNumber = ? AND DocId = ? AND CopyNo = ? AND BId = ? AND ReaderId = ? ', [BorNumber, DocId, CopyNo, BId, ReaderId], function (error, results, fields) {
+			if (error) throw error;
+			if (results.length > 0) {
+				res.writeHead(400);
+				res.write('Duplicate entries');
+			}
+			else {
+				db.query('INSERT INTO borrows(BorNumber,DocId,CopyNo,BId,ReaderId) VALUES (?, ?, ?, ?, ?)', [BorNumber, DocId, CopyNo, BId, ReaderId])
+				res.writeHead(200);
+				res.write('Successfully chekced out');
+			}
+			res.end();
+		});
+	}
+)
 
 
 app.post("/setting", (req, res) => {

@@ -43,7 +43,7 @@ INSERT INTO `PERSON` (`PId`, `PName`) VALUES
 
 DROP TABLE IF EXISTS `borrows`;
 CREATE TABLE IF NOT EXISTS `borrows` (
-  `BorNumber` int(64) UNSIGNED NOT NULL,
+  `BorNumber` int(64) UNSIGNED NOT NULL AUTO_INCREMENT,
   `DocId` int(64) UNSIGNED NOT NULL,
   `CopyNo` int(64) UNSIGNED NOT NULL,
   `BId` int(64) UNSIGNED NOT NULL,
@@ -51,8 +51,7 @@ CREATE TABLE IF NOT EXISTS `borrows` (
   PRIMARY KEY (`DocId`,`CopyNo`,`BId`,`BorNumber`,`ReaderId`),
   KEY `BorNumber` (`BorNumber`),
   KEY `ReaderId` (`ReaderId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
+) 
 --
 -- Dumping data for table `borrows`
 --
@@ -64,23 +63,24 @@ INSERT INTO `borrows` (`BorNumber`, `DocId`, `CopyNo`, `BId`, `ReaderId`) VALUES
 (13, 6, 1, 1, 6),
 (7, 7, 2, 1, 1),
 (8, 11, 3, 3, 1),
-(9, 14, 6, 1, 1);
+(9, 14, 6, 1, 1),
+('10', '6', '2', '1', '1');
 
---
--- Triggers `borrows`
---
-DROP TRIGGER IF EXISTS `NoOfCopiesBorrows_R`;
-DELIMITER $$
-CREATE TRIGGER `NoOfCopiesBorrows_R` BEFORE INSERT ON `borrows` FOR EACH ROW UPDATE Copy SET NoOfCopies = NoOfCopies - 1
-WHERE DocId = NEW.DocId
-$$
-DELIMITER ;
-DROP TRIGGER IF EXISTS `NoOfCopiesReturn_R`;
-DELIMITER $$
-CREATE TRIGGER `NoOfCopiesReturn_R` AFTER DELETE ON `borrows` FOR EACH ROW UPDATE Copy SET NoOfCopies = NoOfCopies + 1
-WHERE DocId = OLD.DocId
-$$
-DELIMITER ;
+-- --
+-- -- Triggers `borrows`
+-- --
+-- DROP TRIGGER IF EXISTS `NoOfCopiesBorrows_R`;
+-- DELIMITER $$
+-- CREATE TRIGGER `NoOfCopiesBorrows_R` BEFORE INSERT ON `borrows` FOR EACH ROW UPDATE Copy SET NoOfCopies = NoOfCopies - 1
+-- WHERE DocId = NEW.DocId
+-- $$
+-- DELIMITER ;
+-- DROP TRIGGER IF EXISTS `NoOfCopiesReturn_R`;
+-- DELIMITER $$
+-- CREATE TRIGGER `NoOfCopiesReturn_R` AFTER DELETE ON `borrows` FOR EACH ROW UPDATE Copy SET NoOfCopies = NoOfCopies + 1
+-- WHERE DocId = OLD.DocId
+-- $$
+-- DELIMITER ;
 
 -- --------------------------------------------------------
 

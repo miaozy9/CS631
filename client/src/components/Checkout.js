@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Checkout = () => {
+    const [BorNumber, setBorNumber] = useState("");
     const [DocId, setDocId] = useState("");
     const [CopyNo, setCopyNo] = useState("");
     const [BId, setBId] = useState("");
@@ -13,6 +14,7 @@ const Checkout = () => {
     const onSubmit = async e => {
         e.preventDefault();
         const checkoutInfo = {
+            BorNumber,
             DocId,
             CopyNo,
             BId,
@@ -28,15 +30,12 @@ const Checkout = () => {
         const body = JSON.stringify(checkoutInfo);
         try {
             const res = await axios.post('http://localhost:8080/checkout', body, config);
-            alert("checkout sucess！")
             navigate("/dashboard");
             }
             catch (error) {
-                alert("Info not match. Please check your entries")
+                alert("Duplicate entries")
                 alert(error)
             }
-        
-       
     }
 
     return (
@@ -46,6 +45,11 @@ const Checkout = () => {
 
             <form className="form" onSubmit={e => onSubmit(e)}>
                 <div className="form-group">
+                <input type="text" placeholder="BorNumber" name="BorNumber"
+                        onChange={(e) => {
+                            setBorNumber(e.target.value);
+                        }}
+                    />
                     <input type="text" placeholder="docid" name="docid"
                         onChange={(e) => {
                             setDocId(e.target.value);
