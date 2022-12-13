@@ -1,8 +1,6 @@
 import React, {useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../Context/GlobalState';
-import NewsArticle from "./NewsArticle";
 import { Link } from 'react-router-dom';
-import Pagination from './Pagination';
 import axios from "axios";
 import SearchBar from './SearchBar';
 import { useNavigate } from 'react-router-dom';
@@ -133,7 +131,8 @@ const Dashboard = () => {
       <div>
         <h1>Reader Function Menu</h1>
         <Link to="/searchDoc"> Search Document</Link>
-        <h2>Checkout Document</h2>
+        <br></br>
+        <Link to="/Checkout"> Checkout</Link>
         <h2>Return Document</h2>
         <h2>Reserve Document</h2>
         <h2>Compute Fine</h2>

@@ -10,6 +10,7 @@ import Login from './components/Login'
 import Adminlogin from './components/Adminlogin'
 import Register from './components/Register'; 
 import Dashboard from './components/Dashboard';
+import Checkout from './components/Checkout'
 import Setting from './components/Setting';
 import Business from './components/category/Business';
 import Tabs from './components/Tabs';
@@ -36,6 +37,7 @@ const App = () => {
             <Route path="/business" element={<Business /> } />
             <Route path="/searchresult" element={<SearchResult /> } />
             <Route path="/searchDoc" element={<SearchDoc /> } />
+            <Route path="/Checkout" element={<Checkout /> } />
             <Route path="/adminSearchResult" element={<AdminSearchResult /> } />
           </Routes>
         </section>
