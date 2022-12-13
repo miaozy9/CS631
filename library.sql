@@ -39,6 +39,83 @@ INSERT INTO `PERSON` (`PId`, `PName`) VALUES
 (14, 'Chair3'),
 (15, 'Editor3'),
 (16, 'Editor4');
+
+
+DROP TABLE IF EXISTS `borrows`;
+CREATE TABLE IF NOT EXISTS `borrows` (
+  `BorNumber` int(64) UNSIGNED NOT NULL,
+  `DocId` int(64) UNSIGNED NOT NULL,
+  `CopyNo` int(64) UNSIGNED NOT NULL,
+  `BId` int(64) UNSIGNED NOT NULL,
+  `ReaderId` int(64) UNSIGNED NOT NULL,
+  PRIMARY KEY (`DocId`,`CopyNo`,`BId`,`BorNumber`,`ReaderId`),
+  KEY `BorNumber` (`BorNumber`),
+  KEY `ReaderId` (`ReaderId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `borrows`
+--
+
+INSERT INTO `borrows` (`BorNumber`, `DocId`, `CopyNo`, `BId`, `ReaderId`) VALUES
+(5, 2, 1, 1, 3),
+(11, 3, 1, 1, 6),
+(12, 3, 2, 3, 6),
+(13, 6, 1, 1, 6),
+(7, 7, 2, 1, 1),
+(8, 11, 3, 3, 1),
+(9, 14, 6, 1, 1);
+
+--
+-- Triggers `borrows`
+--
+DROP TRIGGER IF EXISTS `NoOfCopiesBorrows_R`;
+DELIMITER $$
+CREATE TRIGGER `NoOfCopiesBorrows_R` BEFORE INSERT ON `borrows` FOR EACH ROW UPDATE Copy SET NoOfCopies = NoOfCopies - 1
+WHERE DocId = NEW.DocId
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `NoOfCopiesReturn_R`;
+DELIMITER $$
+CREATE TRIGGER `NoOfCopiesReturn_R` AFTER DELETE ON `borrows` FOR EACH ROW UPDATE Copy SET NoOfCopies = NoOfCopies + 1
+WHERE DocId = OLD.DocId
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bor_transaction`
+--
+
+DROP TABLE IF EXISTS `bor_transaction`;
+CREATE TABLE IF NOT EXISTS `bor_transaction` (
+  `BorNumber` int(64) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `BorDateTime` datetime DEFAULT NULL,
+  `RetDateTime` datetime DEFAULT NULL,
+  `Fine` int(6) DEFAULT 0,
+  PRIMARY KEY (`BorNumber`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bor_transaction`
+--
+
+INSERT INTO `bor_transaction` (`BorNumber`, `BorDateTime`, `RetDateTime`, `Fine`) VALUES
+(1, '2020-12-11 08:13:23', '2020-12-31 08:13:23', 0),
+(2, '2020-12-11 08:14:02', '2020-12-31 08:14:02', 0),
+(3, '2020-12-11 08:14:02', '2020-12-31 08:14:02', 0),
+(4, '2020-12-11 08:14:02', '2020-12-31 08:14:02', 0),
+(5, '2020-12-11 08:34:23', '2020-12-31 08:34:23', 40),
+(6, '2020-12-11 11:05:08', '2020-12-31 11:05:08', 0),
+(7, '2020-12-11 11:08:22', '2020-12-31 11:08:22', 0),
+(8, '2020-12-11 11:08:22', '2020-12-31 11:08:22', 0),
+(9, '2020-12-11 11:08:22', '2020-12-31 11:08:22', 0),
+(10, '2020-12-11 11:25:45', '2020-12-31 11:25:45', 0),
+(11, '2020-12-11 11:35:12', '2020-12-31 11:35:12', 0),
+(12, '2020-12-11 11:35:56', '2020-12-31 11:35:56', 0),
+(13, '2020-12-11 11:35:56', '2020-12-31 11:35:56', 0);
+
 -----------------------------------
 -- Publisher Table --
 DROP TABLE IF EXISTS `PUBLISHER`;
@@ -163,29 +240,7 @@ INSERT INTO `READER` VALUES
 (11, 'SENIOR', 'Prerana', 5, 6, '3145872177', 'next to DBMS palace '),
 (12, 'STAFF', 'Pranavi', 7, 3, '9664102922', 'Secaucus, NJ'),
 (13, 'STUDENT', 'Michele', 1, 0, '3145829322', 'njit');
------------------------------------
--- Bor_Transaction Table --
-DROP TABLE IF EXISTS `BOR_TRANSACTION`;
-CREATE TABLE IF NOT EXISTS `BOR_TRANSACTION` (
-  `BorNumber` int(64) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `BorDateTime` datetime DEFAULT NULL,
-  `RetDateTime` datetime DEFAULT NULL,
-  `ReaderId` int(64) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`BorNumber`),
-  FOREIGN KEY (`ReaderId`) REFERENCES `READER`(`ReaderId`)
---   KEY `ReaderId` (`ReaderId`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `BOR_TRANSACTION` VALUES
-(1, '2020-12-11 08:13:23', '2020-12-31 08:13:23', 1),
-(2, '2020-12-11 08:14:02', '2020-12-31 08:14:02', 3),
-(3, '2020-12-11 08:14:02', '2020-12-31 08:14:02', 4),
-(4, '2020-12-11 08:14:02', '2020-12-31 08:14:02', 6),
-(5, '2020-12-11 08:34:23', '2020-12-31 08:34:23', 2),
-(6, '2020-12-11 11:05:08', '2020-12-31 11:05:08', 5),
-(7, '2020-12-11 11:08:22', '2020-12-31 11:08:22', 7),
-(8, '2020-12-11 11:08:22', '2020-12-31 11:08:22', 8);
------------------------------------
 -- Branch Table --
 DROP TABLE IF EXISTS `BRANCH`;
 CREATE TABLE IF NOT EXISTS `BRANCH` (
@@ -228,39 +283,7 @@ INSERT INTO `COPY` VALUES
 (9, 2, 3, '008J26'),
 (9, 5, 1, 'AB1Q21'),
 (10, 1, 1, '002B05');
------------------------------------
--- Borrows Table --
-DROP TABLE IF EXISTS `BORROWS`;
-CREATE TABLE IF NOT EXISTS `BORROWS` (
-  `Copy_DocId` int(64) UNSIGNED NOT NULL,
-  `CopyNo` int(64) UNSIGNED NOT NULL,
-  `BorNumber` int(64) UNSIGNED NOT NULL,
-  PRIMARY KEY (`Copy_DocId`,`CopyNo`,`BorNumber`),
-  FOREIGN KEY (`BorNumber`) REFERENCES `BOR_TRANSACTION`(`BorNumber`),
-  FOREIGN KEY (`Copy_DocId`) REFERENCES `COPY`(`Copy_DocId`)
---   KEY `BorNumber` (`BorNumber`),
---   KEY `Copy_DocId` (`Copy_DocId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `BORROWS` VALUES
-(3, 1, 1),
-(4, 3, 3),
-(6, 4, 6),
-(9, 7, 8);
------------------------------------
--- Borrows Triggers --
-DROP TRIGGER IF EXISTS `NoOfCopiesBorrows_R`;
-DELIMITER $$
-CREATE TRIGGER `NoOfCopiesBorrows_R` BEFORE INSERT ON `BORROWS` FOR EACH ROW UPDATE Copy SET NoOfCopies = NoOfCopies - 1
-WHERE Copy_DocId = NEW.Copy_DocId
-$$
-DELIMITER ;
-DROP TRIGGER IF EXISTS `NoOfCopiesReturn_R`;
-DELIMITER $$
-CREATE TRIGGER `NoOfCopiesReturn_R` AFTER DELETE ON `BORROWS` FOR EACH ROW UPDATE Copy SET NoOfCopies = NoOfCopies + 1
-WHERE Copy_DocId = OLD.Copy_DocId
-$$
-DELIMITER ;
 
 -- Journal Issue Table --
 DROP TABLE IF EXISTS `JOURNAL_ISSUE`;

@@ -178,23 +178,6 @@ app.post("/checkout", (req, res) => {
 	});
 })
 
-app.post("/getsetting", (req, res) => {
-	let username = req.body.username;
-	db.query('SELECT * FROM user WHERE username = ?', [username], function (err, result) {
-		let normalResults = result.map((mysqlObj) => {
-			return Object.assign({}, mysqlObj);
-		});
-		let arr = {};
-		arr[0] = normalResults[0].general;
-		arr[1] = normalResults[0].business;
-		arr[2] = normalResults[0].entertainment;
-		arr[3] = normalResults[0].health;
-		arr[4] = normalResults[0].science;
-		arr[5] = normalResults[0].sports;
-		arr[6] = normalResults[0].technology;
-		res.status(200).send(arr);
-	});
-})
 
 app.post("/setting", (req, res) => {
 	let data = req.body.check;
