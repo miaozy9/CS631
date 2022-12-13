@@ -12,19 +12,20 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }))
 const apiKey = "205babaf0f0c4a2ab812c5ec9b961270";
+// const password = "20120461mm";
+const password = "puregamer";
 
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    password: "20120461mm",
-  
+	password: password,
 	database: "LoginApp"
 })
 
 const pool = mysql.createPool({
 	user: "root",
     host: "localhost",
-    password: "20120461mm",
+    password: password,
 	database: "LoginApp",
 	waitForConnections: true,
 	connectionLimit: 10,
@@ -91,7 +92,7 @@ app.post("/readerSignin", (req, res) => {
 	let readerID = req.body.readerID;
 
 	console.log(readerID)
-	db.query('SELECT * FROM reader WHERE RID = ? ', [readerID], function (error, result, fields) {
+	db.query('SELECT * FROM reader WHERE READERID = ? ', [readerID], function (error, result, fields) {
 		if (error) throw error;
 
 		if (result.length > 0) {
@@ -100,6 +101,26 @@ app.post("/readerSignin", (req, res) => {
 		} else {
 			res.status(401).send(result);
 			console.log('Incorrect readerID');
+		}
+		res.end();
+	});
+})
+
+
+app.post("/adminSignin", (req, res) => {
+	let username = req.body.username;
+	let password = req.body.password;
+
+	console.log(username, password)
+	db.query('SELECT * FROM ADMIN WHERE ID = ? AND PASSWORD = ?', [username, password], function (error, result, fields) {
+		if (error) throw error;
+
+		if (result.length > 0) {
+			res.status(200).send(result);
+			console.log('Correct adminID!');
+		} else {
+			res.status(401).send(result);
+			console.log('Incorrect adminID');
 		}
 		res.end();
 	});

@@ -13,7 +13,8 @@ const Login = () => {
     const onSubmit = async e => {
         e.preventDefault();
         const reader = {
-            readerID
+            readerID,
+            isAdmin: false
         }
         
         const config = {

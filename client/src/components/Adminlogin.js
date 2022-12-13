@@ -15,7 +15,8 @@ const Login = () => {
         e.preventDefault();
         const user = {
             username,
-            password
+            password,
+            isAdmin: true
         }
         
         const config = {
@@ -26,13 +27,14 @@ const Login = () => {
         
         const body = JSON.stringify(user);
         try {
-            const res = await axios.post('http://localhost:8080/signin', body, config);
+            const res = await axios.post('http://localhost:8080/adminSignin', body, config);
             addUser(user);
             navigate("/dashboard");
 
             }
             catch (error) {
                 alert("Wrong username/password combination!")
+                console.log("adminSignIn: ", error);
             }
         
        

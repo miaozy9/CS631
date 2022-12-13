@@ -12,7 +12,7 @@ const Tabs = () => {
                 <Nav.Link eventKey="link-0" onClick={() => navigate("/login")}>Reader Entrance</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link eventKey="link-1" onClick={() => navigate("/Business")} >Administrator Entrance</Nav.Link>
+                <Nav.Link eventKey="link-1" onClick={() => navigate("/AdminLogin")} >Administrator Entrance</Nav.Link>
             </Nav.Item>
       </Nav>
     )
