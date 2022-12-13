@@ -275,9 +275,29 @@ const Dashboard = () => {
 
     function BranchBorrowerView(props) {
       return (
-        <form className="form" onSubmit={e => navigate("/adminSearchResult", { state: { data: `bid: ${branchID}`}})}>
+        <form className="form" onSubmit={async e => {
+              e.preventDefault();
+              let data;
+              if (props.mode == 1) {
+                data = {
+                  url: 'http://localhost:8080/getBorrowedBooks',
+                  n: nValue,
+                  bid: branchID,
+                  mode: 1
+                }
+              } else {
+                data = {
+                  url: 'http://localhost:8080/getBorrowedBooks',
+                  n: nValue,
+                  bid: branchID,
+                  mode: 0
+                }
+              }
+              navigate("/adminSearchResult", { state: { data: data}})
+            }}>
              <div className="form-group">
                  <input data-testid="N" type="number" placeholder="Enter N" name="n"
+                 value={nValue}
                     onChange={(e) => {
                         setNValue(e.target.value);
                     }}
@@ -285,6 +305,7 @@ const Dashboard = () => {
             </div>
              <div className="form-group">
                  <input data-testid="branchID" type="number" placeholder="Branch ID" name="branchID"
+                    value={branchID}
                     onChange={(e) => {
                         setBranchID(e.target.value);
                     }}
@@ -297,15 +318,34 @@ const Dashboard = () => {
 
     function LibBorrowerView(props) {
       return (
-        <form className="form" onSubmit={e => navigate("/adminSearchResult", { state: { data: `bid: ${branchID}`}})}>
-             <div className="form-group">
-                 <input data-testid="N" type="number" placeholder="Enter N" name="n"
-                    onChange={(e) => {
-                        setNValue(e.target.value);
-                    }}
-                />
-            </div>
-            <input data-testid="submitD5" type="submit" className="btn btn-primary" value="Submit" />
+        <form className="form" onSubmit={async e => {
+          e.preventDefault();
+          let data;
+          if (props.mode == 1) {
+            data = {
+              url: 'http://localhost:8080/getLibraryBooks',
+              n: nValue,
+              bid: branchID,
+              mode: 3
+            }
+          } else {
+            data = {
+              url: 'http://localhost:8080/getLibraryBooks',
+              n: nValue,
+              bid: branchID,
+              mode: 2
+            }
+          }
+          navigate("/adminSearchResult", { state: { data: data}})
+        }}>
+          <div className="form-group">
+                <input data-testid="N" type="number" placeholder="Enter N" name="n"
+                  onChange={(e) => {
+                      setNValue(e.target.value);
+                  }}
+              />
+          </div>
+          <input data-testid="submitD5" type="submit" className="btn btn-primary" value="Submit" />
         </form>
       );
     }
