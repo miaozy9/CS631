@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `borrows` (
   PRIMARY KEY (`DocId`,`CopyNo`,`BId`,`BorNumber`,`ReaderId`),
   KEY `BorNumber` (`BorNumber`),
   KEY `ReaderId` (`ReaderId`)
-) 
+) ;
 --
 -- Dumping data for table `borrows`
 --
@@ -410,18 +410,18 @@ INSERT INTO `RESERVES` VALUES
 (2, 3, 2);
 -----------------------------------
 -- `RESERVES` Triggers --
-DROP TRIGGER IF EXISTS `NoOfCopiesReserves_R`;
-DELIMITER $$
-CREATE TRIGGER `NoOfCopiesReserves_R` BEFORE INSERT ON `RESERVES` FOR EACH ROW UPDATE Copy SET NoOfCopies = NoOfCopies - 1
-WHERE Copy_DocId = NEW.Copy_DocId
-$$
-DELIMITER ;
-DROP TRIGGER IF EXISTS `NoOfCopiesReturnReserve_R`;
-DELIMITER $$
-CREATE TRIGGER `NoOfCopiesReturnReserve_R` AFTER DELETE ON `RESERVES` FOR EACH ROW UPDATE Copy SET NoOfCopies = NoOfCopies + 1
-WHERE Copy_DocId = OLD.Copy_DocId
-$$
-DELIMITER ;
+-- DROP TRIGGER IF EXISTS `NoOfCopiesReserves_R`;
+-- DELIMITER $$
+-- CREATE TRIGGER `NoOfCopiesReserves_R` BEFORE INSERT ON `RESERVES` FOR EACH ROW UPDATE Copy SET NoOfCopies = NoOfCopies - 1
+-- WHERE Copy_DocId = NEW.Copy_DocId
+-- $$
+-- DELIMITER ;
+-- DROP TRIGGER IF EXISTS `NoOfCopiesReturnReserve_R`;
+-- DELIMITER $$
+-- CREATE TRIGGER `NoOfCopiesReturnReserve_R` AFTER DELETE ON `RESERVES` FOR EACH ROW UPDATE Copy SET NoOfCopies = NoOfCopies + 1
+-- WHERE Copy_DocId = OLD.Copy_DocId
+-- $$
+-- DELIMITER ;
 -----------------------------------
 -- `AUTHORS` Constraints --
 
