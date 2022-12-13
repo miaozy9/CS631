@@ -31,7 +31,6 @@ const Return = () => {
             }
             catch (error) {
                 alert("Reserve failed")
-                alert(error)
             }
     }
 

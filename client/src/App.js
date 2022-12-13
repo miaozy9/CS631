@@ -16,6 +16,8 @@ import Reserve from './components/Reserve'
 import Setting from './components/Setting';
 import DocList from './components/DocList'
 import Tabs from './components/Tabs';
+import Fine from './components/Fine';
+
 import SearchResult from './components/SearchResult';
 import SearchDoc from './components/SearchDocument';
 import AdminSearchResult from './components/AdminSearchResult';
@@ -41,6 +43,7 @@ const App = () => {
             <Route path="/Checkout" element={<Checkout /> } />
             <Route path="/Return" element={<Return /> } />
             <Route path="/Reserve" element={<Reserve /> } />
+            <Route path="/Fine" element={<Fine /> } />
             <Route path="/DocList" element={<DocList /> } />
             <Route path="/adminSearchResult" element={<AdminSearchResult /> } />
           </Routes>

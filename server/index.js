@@ -147,6 +147,8 @@ app.post("/readerSignin", (req, res) => {
 	});
 })
 
+
+
 // Admin sign in 
 app.post("/adminSignin", (req, res) => {
 	let username = req.body.username;
@@ -245,6 +247,20 @@ app.get("/doclist/:readerID", async(req, res) => {
 		}
 	  );
 })
+
+// Search for an item
+app.get("/fine/:BorNumber", async(req, res) => {
+	let BorNumber = req.params.BorNumber;
+	console.log(BorNumber)
+	pool.query(
+		'SELECT Fine FROM bor_transaction WHERE BorNumber = ?', [BorNumber],
+		function(err, results, fields) {
+		  console.log(results); // results contains rows returned by server
+		  res.status(200).send(results);
+		}
+	  );
+})
+
 
 app.post("/setting", (req, res) => {
 	let data = req.body.check;
