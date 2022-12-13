@@ -12,23 +12,23 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }))
 const apiKey = "205babaf0f0c4a2ab812c5ec9b961270";
-const password = "20120461mm";
-// const password = "";
+// const password = "20120461mm";
+const password = "puregamer";
 
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
 	password: password,
-	// database: "LoginApp",
-	database: "citylibrary"
+	database: "LoginApp",
+	// database: "citylibrary"
 })
 
 const pool = mysql.createPool({
 	user: "root",
     host: "localhost",
     password: password,
-	// database: "LoginApp",
-	database: "citylibrary",
+	database: "LoginApp",
+	// database: "citylibrary",
 	waitForConnections: true,
 	connectionLimit: 10,
 	queueLimit: 0
@@ -167,8 +167,7 @@ app.get("/search/:search_item", async(req, res) => {
 			  res.status(200).send(results);
 			}
 		  );
-	}
-	else if(identifier == "title:"){
+	} else if(identifier == "title:"){
 		pool.query(
 			'SELECT * FROM document WHERE TITLE = ?',[content],
 			function(err, results, fields) {
@@ -176,8 +175,7 @@ app.get("/search/:search_item", async(req, res) => {
 			  res.status(200).send(results);
 			}
 		  );
-	}
-	else if(identifier == "publisher:"){
+	} else if(identifier == "publisher:"){
 		pool.query(
 			'SELECT * FROM document WHERE PUBLISHERID = ?',[content],
 			function(err, results, fields) {
@@ -185,16 +183,27 @@ app.get("/search/:search_item", async(req, res) => {
 			  res.status(200).send(results);
 			}
 		  );
-	}
-	else if(identifier == "bid:"){
+	} else if(identifier == "bid:"){
 		pool.query(
 			'SELECT * FROM branch WHERE bid = ?',[content],
 			function(err, results, fields) {
 			  res.status(200).send(results);
 			}
 		  );
-	}
-	else{
+	} else if(identifier == "year:"){
+		pool.query(
+			`select count(*) As borrowed, document.DocId, document.title 
+			from bor_transaction right join borrows on bor_transaction.BorNumber = borrows.BorNumber 
+			left join document on document.DocId = borrows.DocId 
+			inner join book on book.book_docid = borrows.DocId where year(bor_transaction.BorDateTime) = ?
+			group by year(bor_transaction.BorDateTime), DocId
+			order by count(document.DocId) desc limit 10`,
+			[content],
+			function(err, results, fields) {
+			  res.status(200).send(results);
+			}
+		  );
+	} else {
 		res.status(200).send({
 			message: "Wrong input format",
 			articles: []

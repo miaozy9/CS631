@@ -36,6 +36,7 @@ const Dashboard = () => {
     const [pubID, setPubID] = useState("");
     const [branchID, setBranchID] = useState("");
     const [nValue, setNValue] = useState("");
+    const [year, setYear] = useState("2020");
     // // Reader Fields
     const [readerID, setReaderID] = useState("");
     const [type, setType] = useState("student");
@@ -123,7 +124,7 @@ const Dashboard = () => {
         <a href="#" onClick={() => setLibBor(!libBor)}>N most borrowed books in Library</a>
         {libBor ? <LibBorrowerView mode={1}/> : <div></div>}
         <a href="#" onClick={() => setPopularBooks(!popularBooks)}>10 most popular books in a year</a>
-        {popularBooks ? <h1>Hello</h1> : <div></div>}
+        {popularBooks ? popularBooksView() : <div></div>}
         <a href="#" onClick={() => setAvgFine(!avgFine)}>Average fine paid per branch</a>
         {avgFine ? <h1>Hello</h1> : <div></div>}
         <a href="#" onClick={() => {}}>Quit</a>
@@ -347,6 +348,21 @@ const Dashboard = () => {
               />
           </div>
           <input data-testid="submitD5" type="submit" className="btn btn-primary" value="Submit" />
+        </form>
+      );
+    }
+
+    function popularBooksView() {
+      return (
+        <form className="form" onSubmit={async e => navigate("/adminSearchResult", { state: { data: `year: ${year}`}})}>
+          <div className="form-group">
+              <input type="number" placeholder="YYYY" min="1900" max="2022" 
+                  onChange={(e) => {
+                      setYear(e.target.value);
+                  }}
+              />
+          </div>
+          <input data-testid="submitD6" type="submit" className="btn btn-primary" value="Submit" />
         </form>
       );
     }
