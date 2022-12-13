@@ -34,7 +34,7 @@ const Return = () => {
             navigate("/dashboard");
             }
             catch (error) {
-                alert("Record not found")
+                alert("Wrong entries")
             }
     }
 

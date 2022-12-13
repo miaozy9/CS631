@@ -138,7 +138,8 @@ const Dashboard = () => {
         <Link to="/Return"> Return</Link>
         <br></br>
         <Link to="/Reserve"> Reserve Document</Link>
-        <h2>Compute Fine</h2>
+        <br></br>
+        <Link to="/Fine">Compute Fine</Link>
         <br></br>
         <Link to="/DocList">Print Borrowed Document List</Link>
         <br></br>

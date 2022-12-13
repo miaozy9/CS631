@@ -12,23 +12,23 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }))
 const apiKey = "205babaf0f0c4a2ab812c5ec9b961270";
-// const password = "20120461mm";
-const password = "puregamer";
+const password = "20120461mm";
+// const password = "";
 
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
 	password: password,
-	database: "LoginApp",
-	// database: "citylibrary"
+	// database: "LoginApp",
+	database: "citylibrary"
 })
 
 const pool = mysql.createPool({
 	user: "root",
     host: "localhost",
     password: password,
-	database: "LoginApp",
-	// database: "citylibrary",
+	// database: "LoginApp",
+	database: "citylibrary",
 	waitForConnections: true,
 	connectionLimit: 10,
 	queueLimit: 0
@@ -220,6 +220,8 @@ app.post("/readerSignin", (req, res) => {
 		res.end();
 	});
 })
+
+
 
 // Admin sign in 
 app.post("/adminSignin", (req, res) => {
