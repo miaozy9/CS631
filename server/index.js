@@ -122,6 +122,18 @@ app.post("/adminSignin", (req, res) => {
 	});
 })
 
+app.post("/checkout", (req, res) => {
+	let DocId = req.body.DocId;
+	let CopyNo = req.body.CopyNo;
+	let BId = req.body.BId;
+	let ReaderId = req.body.ReaderId;
+
+	db.query('INSERT INTO BORROWS (DocId,CopyNo,BId,ReaderId) VALUES(?, ?, ?, ?)', [DocId, CopyNo, BId, ReaderId], function (error, result, fields) {
+		if (error) throw error;
+		res.end();
+	});
+})
+
 app.post("/getsetting", (req, res) => {
 	let username = req.body.username;
 	db.query('SELECT * FROM user WHERE username = ?', [username], function (err, result) {
