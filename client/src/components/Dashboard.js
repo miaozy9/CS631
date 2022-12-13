@@ -35,6 +35,7 @@ const Dashboard = () => {
     const [date, setDate] = useState();
     const [pubID, setPubID] = useState("");
     const [branchID, setBranchID] = useState("");
+    const [nValue, setNValue] = useState("");
     // // Reader Fields
     const [readerID, setReaderID] = useState("");
     const [type, setType] = useState("student");
@@ -114,13 +115,13 @@ const Dashboard = () => {
         <a href="#" onClick={() => setBranchV(!branchV)}>Print Branch Information</a>
         {branchV ? branchView() : <div></div>}
         <a href="#" onClick={() => setBranchBorrower(!branchBorrower)}>Top N most frequent borrowers in Branch</a>
-        {branchBorrower ? <h1>Hello</h1> : <div></div>}
+        {branchBorrower ? <BranchBorrowerView mode={0} /> : <div></div>}
         <a href="#" onClick={() => setLibBorrower(!libBorrower)}>Top N most frequent borrowers in Library</a>
-        {libBorrower ? <h1>Hello</h1> : <div></div>}
+        {libBorrower ? <LibBorrowerView mode={0}/> : <div></div>}
         <a href="#" onClick={() => setBranchBor(!branchBor)}>N most borrowed books in Branch</a>
-        {branchBor ? <h1>Hello</h1> : <div></div>}
+        {branchBor ? <BranchBorrowerView mode={1}/> : <div></div>}
         <a href="#" onClick={() => setLibBor(!libBor)}>N most borrowed books in Library</a>
-        {libBor ? <h1>Hello</h1> : <div></div>}
+        {libBor ? <LibBorrowerView mode={1}/> : <div></div>}
         <a href="#" onClick={() => setPopularBooks(!popularBooks)}>10 most popular books in a year</a>
         {popularBooks ? <h1>Hello</h1> : <div></div>}
         <a href="#" onClick={() => setAvgFine(!avgFine)}>Average fine paid per branch</a>
@@ -263,6 +264,43 @@ const Dashboard = () => {
                 />
             </div>
             <input data-testid="submitD4" type="submit" className="btn btn-primary" value="Submit" />
+        </form>
+      );
+    }
+
+    function BranchBorrowerView(props) {
+      return (
+        <form className="form" onSubmit={e => navigate("/adminSearchResult", { state: { data: `bid: ${branchID}`}})}>
+             <div className="form-group">
+                 <input data-testid="N" type="number" placeholder="Enter N" name="n"
+                    onChange={(e) => {
+                        setNValue(e.target.value);
+                    }}
+                />
+            </div>
+             <div className="form-group">
+                 <input data-testid="branchID" type="number" placeholder="Branch ID" name="branchID"
+                    onChange={(e) => {
+                        setBranchID(e.target.value);
+                    }}
+                />
+            </div>
+            <input data-testid="submitD5" type="submit" className="btn btn-primary" value="Submit" />
+        </form>
+      );
+    }
+
+    function LibBorrowerView(props) {
+      return (
+        <form className="form" onSubmit={e => navigate("/adminSearchResult", { state: { data: `bid: ${branchID}`}})}>
+             <div className="form-group">
+                 <input data-testid="N" type="number" placeholder="Enter N" name="n"
+                    onChange={(e) => {
+                        setNValue(e.target.value);
+                    }}
+                />
+            </div>
+            <input data-testid="submitD5" type="submit" className="btn btn-primary" value="Submit" />
         </form>
       );
     }
