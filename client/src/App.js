@@ -15,6 +15,7 @@ import Business from './components/category/Business';
 import Tabs from './components/Tabs';
 import SearchResult from './components/SearchResult';
 import SearchDoc from './components/SearchDocument';
+import AdminSearchResult from './components/AdminSearchResult';
 
 const App = () => {
 
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="/business" element={<Business /> } />
             <Route path="/searchresult" element={<SearchResult /> } />
             <Route path="/searchDoc" element={<SearchDoc /> } />
+            <Route path="/adminSearchResult" element={<AdminSearchResult /> } />
           </Routes>
         </section>
 
