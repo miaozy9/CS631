@@ -37,7 +37,7 @@ const Dashboard = () => {
     const [branchID, setBranchID] = useState("");
     // // Reader Fields
     const [readerID, setReaderID] = useState("");
-    const [type, setType] = useState("");
+    const [type, setType] = useState("student");
     const [readerName, setReaderName] = useState("");
     const [numBorrow, setNumBorrow] = useState("");
     const [numReserved, setNumReserved] = useState("");
