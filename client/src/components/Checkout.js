@@ -30,11 +30,11 @@ const Checkout = () => {
         const body = JSON.stringify(checkoutInfo);
         try {
             const res = await axios.post('http://localhost:8080/checkout', body, config);
+            alert("Checkout success")
             navigate("/dashboard");
             }
             catch (error) {
                 alert("Duplicate entries")
-                alert(error)
             }
     }
 
