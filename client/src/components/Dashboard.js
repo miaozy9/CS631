@@ -37,6 +37,8 @@ const Dashboard = () => {
     const [branchID, setBranchID] = useState("");
     const [nValue, setNValue] = useState("");
     const [year, setYear] = useState("2020");
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
     // // Reader Fields
     const [readerID, setReaderID] = useState("");
     const [type, setType] = useState("student");
@@ -126,8 +128,8 @@ const Dashboard = () => {
         <a href="#" onClick={() => setPopularBooks(!popularBooks)}>10 most popular books in a year</a>
         {popularBooks ? popularBooksView() : <div></div>}
         <a href="#" onClick={() => setAvgFine(!avgFine)}>Average fine paid per branch</a>
-        {avgFine ? <h1>Hello</h1> : <div></div>}
-        <a href="#" onClick={() => {}}>Quit</a>
+        {avgFine ? avgFineView() : <div></div>}
+        <a href="#" onClick={() => {navigate(-1)}}>Quit</a>
       </div>
     ); else return (
       <div>
@@ -362,6 +364,27 @@ const Dashboard = () => {
                   }}
               />
           </div>
+          <input data-testid="submitD6" type="submit" className="btn btn-primary" value="Submit" />
+        </form>
+      );
+    }
+
+    function avgFineView() {
+      const data = {
+        startDate: startDate,
+        endDate: endDate,
+        mode: 4
+      }
+      return (
+        <form className="form" onSubmit={async e => navigate("/adminSearchResult", { state: { data: data}})}>
+            <div className="form-group">
+              <input type="date" id="startDate" name="startDate"
+                  value={startDate} onChange={(e) => setStartDate(e.target.value)}/>
+            </div>
+            <div className="form-group">
+              <input type="date" id="endDate" name="endDate"
+                  value={endDate} onChange={(e) => setEndDate(e.target.value)}/>
+            </div>
           <input data-testid="submitD6" type="submit" className="btn btn-primary" value="Submit" />
         </form>
       );

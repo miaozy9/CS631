@@ -12,10 +12,10 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }))
 const apiKey = "205babaf0f0c4a2ab812c5ec9b961270";
-const password = "20120461mm";
-// const password = "";
-// const database = "LoginApp";
-const database = "citylibrary";
+// const password = "20120461mm";
+// const database = "citylibrary";
+const password = "puregamer";
+const database = "LoginApp";
 
 
 const db = mysql.createConnection({
@@ -151,6 +151,24 @@ app.post("/getLibraryBooks", (req, res) => {
 			}
 		);
 	}
+})
+
+// Get Average Fine
+app.post("/getAvgFine", (req, res) => {
+	pool.query(
+		`select bid, fine_in_branch.Name, avg(fine_in_branch.BorrowedFine) * 0.2 as AvgFine from ( select branch.Name,
+		branch.BId, datediff(bor_transaction.RetDateTime, bor_transaction.BorDateTime) - 10 as BorrowedFine
+		from borrows left join bor_transaction on bor_transaction.BorNumber = borrows.BorNumber left join
+		branch on branch.BId = borrows.BId inner join book on book.book_docId = borrows.DocId where
+		bor_transaction.BorDateTime >= ? and bor_transaction.BorDateTime <
+		? and datediff(bor_transaction.RetDateTime, bor_transaction.BorDateTime) - 20 > 0 )
+		fine_in_branch group by fine_in_branch.BId`,
+		[req.body.startDate, req.body.endDate],
+		function(err, results, fields) {
+			console.log(results); // results contains rows returned by server
+			res.status(200).send(results);
+		}
+	);
 })
 
 // Search for an item

@@ -16,12 +16,13 @@ const AdminSearchResult = () => {
         let url;
         let res;
         if (typeof data == 'object') {
-            if (data.mode > 1) {
-                url = data.url
+            if (data.mode == 2 || data.mode == 3) {
                 res = await axios.post('http://localhost:8080/getLibraryBooks', data);
                 console.log(data)
+            } else if (data.mode == 4) {
+                res = await axios.post('http://localhost:8080/getAvgFine', data);
+                console.log(data)
             } else {
-                url = data.url
                 res = await axios.post('http://localhost:8080/getBorrowedBooks', data);
                 console.log(data)
             }
