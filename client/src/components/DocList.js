@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { GlobalContext } from '../Context/GlobalState';
 import axios from "axios";
-import { useLocation } from 'react-router-dom';
 
 
 const DocList = () => {

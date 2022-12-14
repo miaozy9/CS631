@@ -1,7 +1,6 @@
  const express = require('express');
 const mysql = require('mysql2');
 var cors = require('cors')
-var axios = require('axios');
 
 const bodyParser = require('body-parser'); // Middleware 
 

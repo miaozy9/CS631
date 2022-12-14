@@ -5,7 +5,6 @@ import { useLocation } from 'react-router-dom';
 
 const SearchResult = () => {
   const [doc, setDocs] = useState([]);
-  const [message, setMessage] = useState([]);
 
   let location = useLocation();
   const { data } = location.state;

@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const AdminSearchResult = () => {
     const navigate = useNavigate();
     const [doc, setDoc] = useState([]);
-    const [message, setMessage] = useState([]);
 
     let location = useLocation();
     const { data } = location.state;

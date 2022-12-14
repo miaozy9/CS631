@@ -13,7 +13,6 @@ import Dashboard from './components/Dashboard';
 import Checkout from './components/Checkout'
 import Return from './components/Return'
 import Reserve from './components/Reserve'
-import Setting from './components/Setting';
 import DocList from './components/DocList'
 import Tabs from './components/Tabs';
 import Fine from './components/Fine';
@@ -37,7 +36,6 @@ const App = () => {
             <Route path ="/adminLogin" element={<Adminlogin />} />
             <Route path="register" element={<Register />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="/settings" element={<Setting /> } />
             <Route path="/searchresult" element={<SearchResult /> } />
             <Route path="/searchDoc" element={<SearchDoc /> } />
             <Route path="/Checkout" element={<Checkout /> } />

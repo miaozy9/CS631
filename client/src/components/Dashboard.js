@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../Context/GlobalState';
 import { Link } from 'react-router-dom';
 import axios from "axios";
-import SearchBar from './SearchBar';
 import { useNavigate } from 'react-router-dom';
 
 // TODO //
@@ -12,9 +11,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const [posts, setPosts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(10);
 
     // Input field Views
     const [addDocV, setAddDocV] = useState(false);
@@ -50,13 +46,6 @@ const Dashboard = () => {
 
     let { userProfile } = useContext(GlobalContext);
     let isAdmin = userProfile[0]['isAdmin'] ? userProfile[0]['isAdmin'] : false;
-
-    useEffect(async () => {
-      // console.log(userProfile)
-      // const url = `http://localhost:8080/news/${userProfile[0].username}`
-      //   const res = await axios.get(url).catch((error) => console.log(error));
-      //   setPosts(res.data.articles)
-    }, []);
 
     const onAddDocSubmit = async e => {
       e.preventDefault();
