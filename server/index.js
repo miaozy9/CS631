@@ -12,10 +12,10 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }))
 const apiKey = "205babaf0f0c4a2ab812c5ec9b961270";
-// const password = "20120461mm";
-// const database = "citylibrary";
-const password = "puregamer";
-const database = "LoginApp";
+const password = "20120461mm";
+const database = "citylibrary";
+// const password = "";
+// const database = "LoginApp";
 
 
 const db = mysql.createConnection({
