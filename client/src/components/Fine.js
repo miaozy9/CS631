@@ -13,7 +13,7 @@ const Fine = () => {
         axios.get(`http://localhost:8080/fine/${BorNumber}`).then(res => {
             setFine(JSON.stringify(res.data))
           })
-        console.log(fine)
+        alert(fine)
     }
 
     return (

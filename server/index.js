@@ -249,7 +249,17 @@ app.post("/readerSignin", (req, res) => {
 	});
 })
 
-
+app.get("/fine/:BorNumber", async(req, res) => {
+	let BorNumber = req.params.BorNumber;
+	console.log(BorNumber)
+	pool.query(
+		'SELECT Fine FROM bor_transaction WHERE BorNumber = ?', [BorNumber],
+		function(err, results, fields) {
+		  console.log(results); // results contains rows returned by server
+		  res.status(200).send(results);
+		}
+	  );
+})
 
 // Admin sign in 
 app.post("/adminSignin", (req, res) => {
